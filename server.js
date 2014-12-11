@@ -9,7 +9,7 @@ var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
+var path = require('path');
 var configDB = require('./config/database.js');
 
 
@@ -24,11 +24,11 @@ app.engine('html', require('ejs').renderFile);
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(session({secret: 'secret angular'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(session({secret: 'secret angular'}));
 
 
 require('./app/routes.js')(app, passport);

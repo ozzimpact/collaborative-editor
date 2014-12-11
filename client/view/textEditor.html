@@ -1,0 +1,36 @@
+<html>
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>textAngular 1.1.2 Demo</title>
+
+    <meta name="robots" content="noindex">
+
+    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
+
+</head>
+
+<body>
+
+<div ng-app="textAngularTest" ng-controller="wysiwygeditor" class="container app">
+    <h3>Editor</h3>
+    <button ng-click="disabled = !disabled" unselectable>Disable text-angular Toggle</button>
+    <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ta-disabled='disabled'></div>
+    <h3>Raw HTML in a text area</h3>
+    <textarea ng-model="htmlcontent" style="width: 100%"></textarea>
+    <h3>Bound with ng-bind-html</h3>
+    <div ng-bind-html="htmlcontent"></div>
+    <h3>Bound with ta-bind, our internal html-binding directive</h3>
+    <div ta-bind="text" ng-model="htmlcontent" ta-readonly='disabled'></div>
+
+    <text-angular name="htmlcontent"><p>Any <b>HTML</b> we put in-between the text-angular tags gets automatically put into the editor if there <strong style="font-size: 12pt;"><u><em>is not</em></u></strong> a ngModel</p></text-angular>
+</div>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-sanitize.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.1.2/textAngular.min.js'></script>
+<script src="/client/controller/textController.js"></script>
+</body>
+
+</html>

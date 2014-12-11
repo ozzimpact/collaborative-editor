@@ -34,7 +34,7 @@ module.exports = function (passport) {
                     var newUser = new User();
 
                     newUser.local.email = email;
-                    newUser.local.password = newUser.generateHash(password); // use the generateHash function in our user model
+                    newUser.local.password = newUser.generateHash(password);
 
                     newUser.save(function (err) {
                         if (err)

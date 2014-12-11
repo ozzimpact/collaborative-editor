@@ -1,0 +1,14 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "main": "path/to/main.css",
+  "dependencies": {
+    "bootstrap": "~3.0.0",
+    "angular-ui-utils": "~0.0.4",
+    "angular-dragdrop": "~1.0.5",
+    "angular-cookies": "~1.2.3",
+    "angular-animate": "~1.2.3",
+    "angular-resource": "~1.2.3",
+    "angular": "~1.2.3"
+  }
+}
