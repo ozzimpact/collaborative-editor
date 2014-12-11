@@ -2,13 +2,7 @@ module.exports = function (app, passport) {
 
 
     app.get('/', function (req, res) {
-        res.render('index.ejs');
-    });
-
-    app.get('/profile', isLoggedIn, function (req, res) {
-        res.render('profile.ejs', {
-            user: req.user
-        });
+        res.render('login.ejs');
     });
 
     app.get('/logout', function (req, res) {
@@ -35,8 +29,6 @@ module.exports = function (app, passport) {
         failureRedirect: '/signup',
         failureFlash: true
     }));
-
-
 
 
     app.get('/connect/local', function (req, res) {
