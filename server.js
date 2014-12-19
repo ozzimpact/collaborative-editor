@@ -29,6 +29,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname, 'css'));
+app.use(express.static(__dirname, 'js'));
+app.use(express.static(__dirname, 'woff'));
 
 
 require('./app/routes.js')(app, passport);

@@ -4,16 +4,16 @@ module.exports = function (app, passport) {
     app.get('/', function (req, res) {
 
         if (req.isAuthenticated()) {
-            res.render('profile.html');
+            res.render('index.html');
         } else {
             res.render('login.ejs');
         }
 
     });
 
-    app.get('/profile', isLoggedIn, function (req, res) {
-        res.render('profile.html', {
-            user: req.user
+    app.get('/index', isLoggedIn, function (req, res) {
+        res.render('index.html', {
+            //user: req.user
         });
     });
 
@@ -30,7 +30,7 @@ module.exports = function (app, passport) {
 
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/profile',
+        successRedirect: '/index',
         failureRedirect: '/login',
         failureFlash: true
     }));
