@@ -14,6 +14,29 @@
     <script src="../public/javascripts/angular-editor.js"></script>
 
     <script>
+
+
+        function dbManager() {
+            var redis = require("redis");
+            client = redis.createClient();
+
+            client.on("error", function (err) {
+                console.log("Error" + err);
+            });
+
+            client.on("connect", runSample);
+
+            function runSample() {
+                client.set("skey", "hello", function (err, reply) {
+                    console.log(reply.toString());
+                });
+                client.get("skey", function (err, reply) {
+                    console.log(reply.toString());
+                });
+
+            }
+        }
+
         (function (window) {
             'use strict';
             var angular = window.angular, appName = 'app';
@@ -26,7 +49,11 @@
                         $scope.editor = 'tom';
 
                         $scope.clearEditor = function () {
-                            $scope.editor = 'jane....';
+                            $scope.editor = '';
+                        }
+                        $scope.sendMessage = function () {
+                            dbManager();
+
                         }
                     });
 
@@ -43,7 +70,10 @@
     <div simditor ng-model="editor" placeholder="some placeholder"></div>
     <div class="btn-group">
         <button ng-click="clearEditor()">CLEAR</button>
-    </div>
+        <button ng-click="dbManager()">SEND</button>
+
+
+
 </div>
 </body>
 </html>
