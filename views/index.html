@@ -16,26 +16,7 @@
     <script>
 
 
-        function dbManager() {
-            var redis = require("redis");
-            client = redis.createClient();
 
-            client.on("error", function (err) {
-                console.log("Error" + err);
-            });
-
-            client.on("connect", runSample);
-
-            function runSample() {
-                client.set("skey", "hello", function (err, reply) {
-                    console.log(reply.toString());
-                });
-                client.get("skey", function (err, reply) {
-                    console.log(reply.toString());
-                });
-
-            }
-        }
 
         (function (window) {
             'use strict';

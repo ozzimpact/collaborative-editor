@@ -1,9 +1,19 @@
+var redis = require("redis")
+    , client = redis.createClient();
+
 module.exports = function (app, passport) {
 
 
     app.get('/', function (req, res) {
 
         if (req.isAuthenticated()) {
+
+
+            client.set("skey", "hello", function (err, reply) {
+                console.log(reply.toString());
+            });
+
+
             res.render('index.html');
         } else {
             res.render('login.ejs');
