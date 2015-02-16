@@ -9,21 +9,25 @@ module.exports = function (app, passport) {
         if (req.isAuthenticated()) {
 
 
-            client.set("skey", "hello", function (err, reply) {
+            var obj = new Object();
+            obj.name = "ozi";
+            obj.age = "23";
+            var jsonString = JSON.stringify(obj);
+            client.set("firstjson", jsonString, function (err, reply) {
                 console.log(reply.toString());
             });
 
 
-            res.render('index.html');
+            res.render('login.html');
         } else {
-            res.render('login.ejs');
+            res.render('index.html');
         }
 
     });
 
     app.get('/index', isLoggedIn, function (req, res) {
         res.render('index.html', {
-            //user: req.user
+            user: req.user
         });
     });
 
@@ -35,12 +39,12 @@ module.exports = function (app, passport) {
 
 
     app.get('/login', function (req, res) {
-        res.render('login.ejs', {message: req.flash('loginMessage')});
+        res.render('login.html', {message: req.flash('loginMessage')});
     });
 
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/index',
+        successRedirect: '/',
         failureRedirect: '/login',
         failureFlash: true
     }));
@@ -56,11 +60,15 @@ module.exports = function (app, passport) {
         failureFlash: true
     }));
 
-
+    app.get('/checklogin',function(req,res) {
+        if (req.user)
+            res.send(true);
+        else
+            res.send(false);
+    });
     function isLoggedIn(req, res, next) {
         if (req.isAuthenticated())
             return next();
-
         res.redirect('/');
     }
 };

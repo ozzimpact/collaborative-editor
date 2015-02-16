@@ -9,13 +9,13 @@ cookieParser = require('cookie-parser');
 bodyParser = require('body-parser');
 session = require('express-session');
 path = require('path');
-configDB = require('./config/database.js');
+configDB = require('./app/config/database.js');
 app = express();
 
 
 mongoose.connect(configDB.url);
 
-require('./config/passport')(passport);
+require('./app/config/passport')(passport);
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
