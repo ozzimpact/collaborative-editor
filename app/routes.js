@@ -7,20 +7,11 @@ module.exports = function (app, passport) {
     app.get('/', function (req, res) {
 
         if (req.isAuthenticated()) {
-
-
-            var obj = new Object();
-            obj.name = "ozi";
-            obj.age = "23";
-            var jsonString = JSON.stringify(obj);
-            client.set("firstjson", jsonString, function (err, reply) {
-                console.log(reply.toString());
+            res.render('index.html', {
+                user: req.user
             });
-
-
-            res.render('login.html');
         } else {
-            res.render('index.html');
+            res.render('login.html');
         }
 
     });
@@ -60,12 +51,7 @@ module.exports = function (app, passport) {
         failureFlash: true
     }));
 
-    app.get('/checklogin',function(req,res) {
-        if (req.user)
-            res.send(true);
-        else
-            res.send(false);
-    });
+
     function isLoggedIn(req, res, next) {
         if (req.isAuthenticated())
             return next();

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://C:/SourceControl/eng-project/editor/Gruntfile.js" charset="UTF-8" />
+    <file url="file://C:/SourceControl/eng-project/editor/app/scripts/app.js" charset="UTF-8" />
+    <file url="file://C:/SourceControl/eng-project/editor/app/scripts/controllers/nav.js" charset="UTF-8" />
+    <file url="file://C:/SourceControl/eng-project/editor/bower.json" charset="UTF-8" />
+    <file url="file://C:/SourceControl/eng-project/editor/package.json" charset="UTF-8" />
+  </component>
+</project>

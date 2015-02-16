@@ -1,9 +1,9 @@
 <div style="float:left;width:100px;">
   <h3>Rooms</h3>
   <div id="rooms"></div>
-  <button ng-click="addNewRoom()" class="btn btn-primary">Add Room</button>
+  <button class="btn btn-primary">Add Room</button>
 </div>
-<div ng-app="angNewsApp" class="container app " style="float:left;width:1000px;border-left:1px solid black;border-right:1px solid black;">
+<div ng-app="collaborativeEditor" class="container app " >
  <h3>Editor</h3>
   <p><button class="btn btn-warning" value="" ng-click="disabled = !disabled" unselectable >Disable text-angular Toggle</button></p>
   <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ta-disabled='disabled'></div>
