@@ -13,7 +13,5 @@ module.exports = mongoose.model('Editor', editorSchema);
 
 
 module.exports = {
-
     url: 'mongodb://localhost:27017/CollaborativeEditor'
-
 };

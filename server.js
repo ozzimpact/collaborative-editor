@@ -1,4 +1,3 @@
-//node server
 var express = require('express'),
     port = process.env.PORT || 8080,
     mongoose = require('mongoose'),
@@ -10,21 +9,14 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     path = require('path'),
-    configDB = require('./app/js/dbconfig.js'),
-    app = express(),
-    server = http.createServer(app);
-    io = require('socket.io').listen(server),
-    redis = require('redis'),
-    redisClient = redis.createClient();
-
-
+    configDB = require('./app/dbconfig'),
+    socketio = require('./app/socketio');
 
 mongoose.connect(configDB.url);
-
-require('./app/js/passport')(passport);
-
+require('./app/passport')(passport);
 
 
+var app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -44,20 +36,10 @@ app.use(express.static(__dirname, 'js'));
 app.use(express.static(__dirname, 'woff'));
 
 
-require('./app/js/routes.js')(app, passport);
+require('./app/routes.js')(app, passport);
 
-app.listen(port);
-console.log('The magic happens on port ' + port);
+var server = app.listen(port, function () {
+    console.log('Express server listening on port ' + server.address().port);
 
-io.sockets.on('connection', function (socket) {
-   socket.on('addRoom', function (roomName) {
-       redisClient.hmset('rooms',{
-           'owner':req.user.local.email,
-           'name':roomName,
-           'created': Date.now
-       });
-       socket.emit('updateRooms', redisClient.hgetall('rooms', function (err, reply) {
-           console.log('Rooms are updated.');
-       }));
-   });
+    socketio.attach(server);
 });

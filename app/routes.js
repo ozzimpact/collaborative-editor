@@ -2,8 +2,6 @@ var redis = require('redis'),
     redisClient = redis.createClient();
 
 module.exports = function (app, passport) {
-
-
     app.get('/', function (req, res) {
 
         if (req.isAuthenticated()) {

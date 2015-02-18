@@ -1,14 +1,20 @@
 <div style="float:left;width:100px;">
-  <h3>Rooms</h3>
-  <div id="rooms"></div>
-    <div ng-controller="EditorCtrl" >
-  <button  ng-click="trial()" class="btn btn-primary">Add Room</button>
+    <h3>Rooms</h3>
+
+    <div id="rooms"  ng-controller="EditorCtrl"></div>
+    <div  ng-controller="EditorCtrl" ng-repeat="room in Rooms" >{{room}}</div>
+    <div>
+        <button ng-click="trial()" class="btn btn-primary">Add Room</button>
 
     </div>
 </div>
-<div class="container app " >
- <h3>Editor</h3>
-  <p><button class="btn btn-warning" value="" ng-click="disabled = !disabled" unselectable >Disable text-angular Toggle</button></p>
-  <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ta-disabled='disabled'></div>
-</div>
+<div class="container app ">
+    <h3>Editor</h3>
 
+    <p>
+        <button class="btn btn-warning" value="" ng-click="disabled = !disabled" unselectable>Disable text-angular
+            Toggle
+        </button>
+    </p>
+    <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ng-change="sendContext(htmlcontent)" ta-disabled='disabled'></div>
+</div>
