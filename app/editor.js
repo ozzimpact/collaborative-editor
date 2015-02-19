@@ -10,7 +10,7 @@ app.controller('EditorCtrl', ['$scope', 'collaSocket', function ($scope, socketi
         socketio.emit('addRoom', {roomName: prompt('Room Name'), email: 'oguzhan.demir@trendyol.com'});
     };
     $scope.sendContext = function (data) {
-      socketio.emit('textChanged',{context:$scope.htmlcontent, email: 'oguzhan.demir@trendyol.com'});
+      socketio.emit('textChanged',data);
     };
 
     $scope.handleSocket = function (evt, payload) {
@@ -18,12 +18,13 @@ app.controller('EditorCtrl', ['$scope', 'collaSocket', function ($scope, socketi
     };
 
     $scope.handleUupdateRooms = function (evt, payload) {
-        $scope.Rooms = Object.keys(payload);
+        $scope.Rooms = payload;
     };
     $scope.handleUpdateConversation = function (evt, payload) {
-        for(var key in Object.keys(payload)){
-        $scope.htmlcontent = Object.keys(payload)[key].context;
-        }
+        //for(var key in Object.keys(payload)){
+        //$scope.htmlcontent = Object.keys(payload)[key].context;
+        //}
+        $scope.htmlcontent = payload;
         };
 
     $scope.$on('socket:addRoom', $scope.handleSocket);

@@ -19,8 +19,10 @@ module.exports.attach = function (server) {
     sio.sockets.on('connection', function (socket) {
 
         redisClient.hgetall('rooms', function (err, reply) {
-            socket.emit('updateRooms', reply);
+            sio.sockets.emit('updateRooms', Object.keys(reply));
         });
+
+
         socket.on('addRoom', function (data) {
             var payload = {
                 'owner': data.email,
@@ -29,27 +31,30 @@ module.exports.attach = function (server) {
             };
 
             redisClient.hset('rooms', data.roomName, JSON.stringify(payload), function (err, reply) {
-               if(reply) {
-                   redisClient.hgetall('rooms', function (err, reply) {
-                       socket.emit('updateRooms', reply);
-                   });
-              }
+                if (reply) {
+                    redisClient.hgetall('rooms', function (err, reply) {
+                        socket.broadcast.emit('updateRooms', Object.keys(reply));
+                    });
+                }
+            });
+        });
+
+
+        socket.on('textChanged', function (data) {
+            console.log(data);
+        //    var payload = {
+        //        //'writer': data.email,
+        //        'context': data,
+        //        'created': new Date(),
+        //        'room': 'public'
+        //    };
+        //    redisClient.hset('textHistory', 'public', JSON.stringify(payload), function (err, reply) {
+        //        if (reply) {
+        //            redisClient.hgetAll('textHistory', function (err, reply) {
+                        socket.broadcast.emit('updateConversation', data);
+        //            });
+        //        }
+        //    });
         });
     });
-        socket.on('textChanged', function (data) {
-            var payload = {
-                'writer': data.email,
-                'context': data.context,
-                'created': new Date(),
-                'room': 'public'
-            };
-            redisClient.hset('textHistory', 'public', JSON.stringify(payload), function (err,reply) {
-                if(reply){
-                    //redisClient.hgetAll('textHistory', function (err, reply) {
-                    //    socket.emit('updateConversation', reply);
-                    //});
-                }
-            } );
-        });
-});
 };

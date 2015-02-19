@@ -10,11 +10,14 @@
 </div>
 <div class="container app ">
     <h3>Editor</h3>
-
+<!--
     <p>
         <button class="btn btn-warning" value="" ng-click="disabled = !disabled" unselectable>Disable text-angular
             Toggle
         </button>
     </p>
     <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ng-change="sendContext(htmlcontent)" ta-disabled='disabled'></div>
+-->
+    <textarea rows="20" cols="100" ng-model="htmlcontent" ng-change="sendContext(htmlcontent)" name="htmlcontent"></textarea>
+
 </div>
