@@ -2,7 +2,8 @@
     <h3>Rooms</h3>
 
     <div id="rooms"  ng-controller="EditorCtrl"></div>
-    <div  ng-controller="EditorCtrl" ng-repeat="room in Rooms" >{{room}}</div>
+    <div  ng-controller="EditorCtrl" ng-repeat="room in Rooms" >
+        <a href ="#" ng-click="switchRoom(room)">{{room}}</a> </div>
     <div>
         <button ng-click="trial()" class="btn btn-primary">Add Room</button>
 
@@ -18,6 +19,6 @@
     </p>
     <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ng-change="sendContext(htmlcontent)" ta-disabled='disabled'></div>
 -->
-    <textarea rows="20" cols="100" ng-model="htmlcontent" ng-change="sendContext(htmlcontent)" name="htmlcontent"></textarea>
+    <textarea rows="20" cols="130" ng-model="htmlcontent" ng-change="sendContext(htmlcontent)" name="htmlcontent"></textarea>
 
 </div>

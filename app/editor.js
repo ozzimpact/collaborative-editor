@@ -6,6 +6,9 @@ app.controller('EditorCtrl', ['$scope', 'collaSocket', function ($scope, socketi
     $scope.htmlcontent = $scope.orightml;
     $scope.disabled = false;
 
+    $scope.switchRoom = function (rm) {
+        console.log(rm);
+    };
     $scope.trial = function () {
         socketio.emit('addRoom', {roomName: prompt('Room Name'), email: 'oguzhan.demir@trendyol.com'});
     };
