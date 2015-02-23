@@ -6,8 +6,17 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'>
-    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
+    <link rel='stylesheet prefetch' href='../bower_components/bootstrap/dist/css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch' href='../bower_components/font-awesome/css/font-awesome.min.css'>
+
+  <style>  .ta-editor {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    }</style>
+
     <link rel="stylesheet" href="../public/stylesheets/main.css">
 </head>
 <body ng-app="collaborativeEditor" ng-controller="EditorCtrl">
@@ -31,9 +40,10 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.2/textAngular-sanitize.min.js'></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.2/textAngular.min.js'></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script src='../bower_components/textAngular/dist/textAngular-sanitize.min.js'></script>
+<script src='../bower_components/textAngular/dist/textAngular.min.js'></script>
+<script src='../bower_components/textAngular/dist/textAngular-rangy.min.js'></script>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="/bower_components/angular-socket-io/socket.js"></script>
 

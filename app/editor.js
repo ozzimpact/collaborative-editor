@@ -1,19 +1,20 @@
 'use strict';
 
 
+
 app.controller('EditorCtrl', ['$scope', 'collaSocket', function ($scope, socketio) {
-    $scope.orightml = '';
-    $scope.htmlcontent = $scope.orightml;
+    $scope.htmlcontent  = '';
     $scope.disabled = false;
+
+    $scope.$watch('htmlcontent',function(data){
+        socketio.emit('textChanged',data);
+    });
 
     $scope.switchRoom = function (rm) {
         console.log(rm);
     };
     $scope.trial = function () {
         socketio.emit('addRoom', {roomName: prompt('Room Name'), email: 'oguzhan.demir@trendyol.com'});
-    };
-    $scope.sendContext = function (data) {
-      socketio.emit('textChanged',data);
     };
 
     $scope.handleSocket = function (evt, payload) {
