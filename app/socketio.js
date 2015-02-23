@@ -16,10 +16,11 @@ module.exports.attach = function (server) {
     sio.set('transports', ['websocket']);
     sio.set('resource', '/socket.io');
 
-    sio.sockets.on('connection', function (socket) {
+    sio.on('connection', function (socket) {
 
         redisClient.hgetall('rooms', function (err, reply) {
-            sio.sockets.emit('updateRooms', Object.keys(reply));
+            if(reply)
+            socket.emit('updateRooms', Object.keys(reply));
         });
 
 
@@ -31,14 +32,36 @@ module.exports.attach = function (server) {
             };
 
             redisClient.hset('rooms', data.roomName, JSON.stringify(payload), function (err, reply) {
-                if (reply) {
+                if(reply) {
                     redisClient.hgetall('rooms', function (err, reply) {
+                        if(reply)
                         socket.broadcast.emit('updateRooms', Object.keys(reply));
                     });
                 }
+
             });
+
+            redisClient.hgetall('rooms', function (err, reply) {
+                if(reply)
+                socket.emit('updateRooms', Object.keys(reply));
+            });
+
         });
 
+        socket.on('addUserToRoom', function (room, user) {
+            socket.room = room;
+            socket.join(room);
+            socket.broadcast.to(room).emit('updateConversation', user + ' has connected.');
+        });
+
+        socket.on('changeRoom', function (room, user) {
+            //socket.broadcast.emit('updateConversation', user + ' has disconnected.');
+            if(socket.room != undefined)
+            socket.leave(socket.room);
+            socket.join(room);
+            socket.room = room;
+            socket.broadcast.to(room).emit('updateConversation', user + ' has connected.');
+        });
 
 
         socket.on('textChanged', function (data) {
@@ -52,7 +75,7 @@ module.exports.attach = function (server) {
         //    redisClient.hset('textHistory', 'public', JSON.stringify(payload), function (err, reply) {
         //        if (reply) {
         //            redisClient.hgetAll('textHistory', function (err, reply) {
-                        socket.broadcast.emit('updateConversation', data);
+                        socket.broadcast.to(socket.room).emit('updateConversation', data);
         //            });
         //        }
         //    });
