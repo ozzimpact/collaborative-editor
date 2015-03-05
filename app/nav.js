@@ -15,7 +15,6 @@ app.controller('NavCtrl', function ($scope, $http) {
             .error(function(data) {
                 console.log('error: ' + data);
             });
-
     }
 
 });

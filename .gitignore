@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 node_modules
 bower_components
 .idea
+=======
+.idea/workspace.xml
+
+node_modules
+bower_components
+>>>>>>> 45a8fbe0a3d07d8639fb96da23559e86dccff363

@@ -8,14 +8,16 @@
  *
  * Main module of the application.
  */
-
+//
 var app = angular
-  .module('angNewsApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
-    'textAngular',
-  ]);
+    .module('collaborativeEditor', [
+        'ngAnimate',
+        'ngCookies',
+        'ngResource',
+        'ngRoute',
+        'ngSanitize',
+        'ngTouch',
+        'textAngular',
+        'btford.socket-io'
+    ]);
+

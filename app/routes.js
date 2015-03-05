@@ -1,9 +1,7 @@
-var redis = require("redis")
-    , client = redis.createClient();
+var redis = require('redis'),
+    redisClient = redis.createClient();
 
 module.exports = function (app, passport) {
-
-
     app.get('/', function (req, res) {
 
         if (req.isAuthenticated()) {
@@ -20,6 +18,27 @@ module.exports = function (app, passport) {
         res.render('index.html', {
             user: req.user
         });
+    });
+
+
+    app.get('/api', isLoggedIn, function (req, res) {
+        redisClient.hgetall('frameworks', function (err, object) {
+            res.json(object);
+        });
+    });
+
+    app.post('/api', function (req, res) {
+        redisClient.hmset('try1', {
+            'userEmail': req.user.local.email,
+            'password': req.user.local.password,
+            'text': 'this is an example of redis post with hmset.'
+        }, function (reply, err) {
+            console.log(reply);
+        });
+
+    });
+    app.get('/userEmail', isLoggedIn, function (req, res) {
+        res.json(req.user.local.email);
     });
 
 

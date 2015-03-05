@@ -1,21 +1,22 @@
-//node server
-var express = require('express');
-port = process.env.PORT || 8080;
-mongoose = require('mongoose');
-passport = require('passport');
-flash = require('connect-flash');
-morgan = require('morgan');
-cookieParser = require('cookie-parser');
-bodyParser = require('body-parser');
-session = require('express-session');
-path = require('path');
-configDB = require('./app/config/database.js');
-app = express();
-
+var express = require('express'),
+    port = process.env.PORT || 8080,
+    mongoose = require('mongoose'),
+    passport = require('passport'),
+    flash = require('connect-flash'),
+    http = require('http'),
+    morgan = require('morgan'),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    session = require('express-session'),
+    path = require('path'),
+    configDB = require('./app/dbconfig'),
+    socketio = require('./app/socketio');
 
 mongoose.connect(configDB.url);
+require('./app/passport')(passport);
 
-require('./app/config/passport')(passport);
+
+var app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
@@ -37,7 +38,8 @@ app.use(express.static(__dirname, 'woff'));
 
 require('./app/routes.js')(app, passport);
 
-app.listen(port);
-console.log('The magic happens on port ' + port);
+var server = app.listen(port, function () {
+    console.log('Express server listening on port ' + server.address().port);
 
-
+    socketio.attach(server);
+});
