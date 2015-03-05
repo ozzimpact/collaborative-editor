@@ -1,21 +1,28 @@
 'use strict';
 
 
-app.controller('EditorCtrl', ['$scope', 'collaSocket', function ($scope, socketio) {
+app.controller('EditorCtrl', ['$scope', 'collaSocket','userService',function ($scope, socketio, userService) {
 
     $scope.htmlcontent = '';
     $scope.disabled = false;
+    $scope.username = '';
+    $scope.currentRoom ='';
 
-    $scope.$watch('htmlcontent', function (newVal, oldVal) {
-        socketio.emit('textChanged', newVal);
-    });
 
+     userService.getUserDetail().then(function (dataResponse) {
+            $scope.username = dataResponse.data;
+        });
+
+        $scope.sendContent = function (newVal) {
+            socketio.emit('textChanged', newVal);
+    };
     $scope.chooseRoom = function (room) {
-        socketio.emit('changeRoom', room, $('.userEmail').text());
+        $scope.currentRoom = room;
+        socketio.emit('changeRoom', room, $scope.username);
     };
 
     $scope.addNewRoom = function () {
-        socketio.emit('addRoom', {roomName: prompt('Room Name'), email: 'oguzhan.demir@trendyol.com'});
+        socketio.emit('addRoom', {roomName: prompt('Room Name'), email: $scope.username});
     };
 
     $scope.handleSocket = function (evt, payload) {

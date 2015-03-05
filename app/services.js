@@ -13,8 +13,19 @@ app.factory('collaSocket', ['socketFactory', function (socketFactory) {
         transports: ["websocket"]
     };
     var socketInstance = io.connect(address, details);
-
     return socketFactory({
         ioSocket: socketInstance
     });
 }]);
+app.service('userService', function ($http) {
+    var baseUrl = '/userEmail';
+    this.getUserDetail = function () {
+        return $http({
+            method: 'GET',
+            url: baseUrl
+        });
+    };
+
+});
+
+

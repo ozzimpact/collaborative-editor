@@ -37,6 +37,9 @@ module.exports = function (app, passport) {
         });
 
     });
+    app.get('/userEmail', isLoggedIn, function (req, res) {
+        res.json(req.user.local.email);
+    });
 
 
     app.get('/logout', function (req, res) {
