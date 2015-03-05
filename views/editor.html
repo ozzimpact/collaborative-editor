@@ -11,7 +11,6 @@
 </div>
 <div class="container app ">
     <h3>Editor</h3>
-
 <!--
     <p>
         <button class="btn btn-warning" value="" ng-click="disabled = !disabled" unselectable>Disable text-angular
@@ -22,7 +21,8 @@
 -->
 
         <button ng-click="disabled = !disabled" unselectable>Disable text-angular Toggle</button>
-        <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ng-keyup="sendContent(htmlcontent)" ta-disabled='disabled'></div>
+        <text-angular-toolbar name="editorToolbar" ng-click="sendContent(htmlcontent)"></text-angular-toolbar>
+        <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ta-target-toolbars='editorToolbar' ng-keyup="sendContent(htmlcontent)" ta-disabled='disabled'></div>
     </div>
 
 
