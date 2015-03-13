@@ -1,9 +1,9 @@
 <div style="float:left;width:100px;">
     <h3>Rooms</h3>
 
-    <div id="rooms"  ng-controller="EditorCtrl"></div>
-    <div  ng-controller="EditorCtrl" ng-repeat="room in Rooms" >
-        <a href ="#" ng-click="chooseRoom(room)">{{room}}</a> </div>
+    <div id="rooms"></div>
+    <div ng-repeat="room in Rooms">
+        <a href="#" ng-click="chooseRoom(room)">{{room}}</a></div>
     <div>
         <button ng-click="addNewRoom()" class="btn btn-primary">Add Room</button>
 
@@ -11,18 +11,10 @@
 </div>
 <div class="container app ">
     <h3>Editor</h3>
-<!--
-    <p>
-        <button class="btn btn-warning" value="" ng-click="disabled = !disabled" unselectable>Disable text-angular
-            Toggle
-        </button>
-    </p>
-    <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ng-change="sendContext(htmlcontent)" ta-disabled='disabled'></div>
--->
 
-        <button ng-click="disabled = !disabled" unselectable>Disable text-angular Toggle</button>
-        <text-angular-toolbar name="editorToolbar" ng-click="sendContent(htmlcontent)"></text-angular-toolbar>
-        <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ta-target-toolbars='editorToolbar' ng-keyup="sendContent(htmlcontent)" ta-disabled='disabled'></div>
-    </div>
+    <text-angular-toolbar name="editorToolbar" ng-click="sendContent(htmlcontent)"></text-angular-toolbar>
+    <div id=editor text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent"
+         ta-target-toolbars='editorToolbar' ng-keyup="sendContent(htmlcontent)" ta-disabled='disabled'></div>
+</div>
 
 

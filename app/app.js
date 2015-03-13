@@ -18,6 +18,7 @@ var app = angular
         'ngSanitize',
         'ngTouch',
         'textAngular',
-        'btford.socket-io'
+        'btford.socket-io',
+        'ui-notification'
     ]);
 

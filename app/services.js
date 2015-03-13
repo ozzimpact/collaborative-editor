@@ -17,15 +17,18 @@ app.factory('collaSocket', ['socketFactory', function (socketFactory) {
         ioSocket: socketInstance
     });
 }]);
-app.service('userService', function ($http) {
+app.factory('userService', function ($http) {
     var baseUrl = '/userEmail';
-    this.getUserDetail = function () {
+    var getUserDetail = function () {
         return $http({
             method: 'GET',
             url: baseUrl
         });
     };
 
+    return{
+        getUserDetail:getUserDetail
+    }
 });
 
 
