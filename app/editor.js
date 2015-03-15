@@ -39,14 +39,18 @@
             Notification.info(connected);
 
         };
-
+        $scope.handleOnlineUsers = function (evt, payload) {
+          $scope.online = payload;
+        };
 
         $scope.$on('socket:updateRooms', $scope.handleUpdateRooms);
         $scope.$on('socket:updateConversation', $scope.handleUpdateConversation);
         $scope.$on('socket:informRoom', $scope.handleInformRoom);
+        $scope.$on('socket:onlineUsers', $scope.handleOnlineUsers);
         socketio.forward('updateRooms', $scope);
         socketio.forward('updateConversation', $scope);
         socketio.forward('informRoom', $scope);
+        socketio.forward('onlineUsers', $scope);
 
         $scope.bootstrap();
     }]);

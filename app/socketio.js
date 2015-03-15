@@ -24,6 +24,12 @@ module.exports.attach = function (server) {
                 socket.emit('updateRooms', reply);
         });
 
+        if (socket.room != undefined)
+            redisClient.hkeys(socket.room, function (err, reply) {
+                if (reply)
+                    socket.to(socket.room).emit('onlineUsers', reply);
+            });
+
 
         socket.on('addRoom', function (data) {
             var payload = {
@@ -49,25 +55,38 @@ module.exports.attach = function (server) {
 
         });
         socket.on('changeRoom', function (room, user) {
+            var date = new Date();
 
-            //socket.broadcast.emit('updateConversation', user + ' has disconnected.');
-
-
-            redisClient.hkeys('onlineUsers', function (err, reply) {
-                console.log(reply+ 'online');
+            socket.leave(socket.room);
+            redisClient.hdel(socket.room, user, function (err, reply) {
+                if (reply)
+                    redisClient.hkeys(socket.room, function (err, reply) {
+                        socket.to(socket.room).emit('onlineUsers', reply);
+                        console.log(reply);
+                    });
             });
 
+            socket.broadcast.to(socket.room).emit('informRoom', user + ' has left.');
+            redisClient.hkeys(socket.room, function (err, reply) {
+                socket.to(socket.room).emit('onlineUsers', reply);
+                console.log(reply);
+            });
 
-            if (socket.room != undefined) {
-                socket.leave(socket.room);
-                redisClient.hset('onlineUsers', socket.room, user, redis.print);
-            }
-            if (socket.room != undefined && socket.room != room)
-                socket.broadcast.to(socket.room).emit('informRoom', user + ' has left.');
             socket.join(room);
-            if (socket.room != undefined && socket.room != room)
+            if (socket.room != room) {
+                redisClient.hset(room, user, date, function (err, reply) {
+                    redisClient.hkeys(room, function (err, reply) {
+                        socket.broadcast.to(room).emit('onlineUsers', reply);
+                    });
+                });
+                redisClient.hkeys(room, function (err, reply) {
+                    socket.to(room).emit('onlineUsers', reply);
+                    console.log(reply);
+                    socket.room = room;
+                });
                 socket.broadcast.to(room).emit('informRoom', user + ' has connected.');
-            socket.room = room;
+
+            }
         });
 
 

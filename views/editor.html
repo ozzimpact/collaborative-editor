@@ -4,10 +4,15 @@
     <div id="rooms"></div>
     <div ng-repeat="room in Rooms">
         <a href="#" ng-click="chooseRoom(room)">{{room}}</a></div>
-    <div>
+
+    <div >
+
         <button ng-click="addNewRoom()" class="btn btn-primary">Add Room</button>
 
     </div>
+    <div ng-repeat="user in online">
+        {{user}}
+        </div>
 </div>
 <div class="container app ">
     <h3>Editor</h3>
@@ -16,5 +21,6 @@
     <div id=editor text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent"
          ta-target-toolbars='editorToolbar' ng-keyup="sendContent(htmlcontent)" ta-disabled='disabled'></div>
 </div>
+
 
 
