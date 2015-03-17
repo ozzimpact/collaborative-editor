@@ -2,25 +2,26 @@
     <h3>Rooms</h3>
 
     <div id="rooms"></div>
-    <div ng-repeat="room in Rooms">
+    <div ng-repeat="room in vm.Rooms">
         <a href="#" ng-click="chooseRoom(room)">{{room}}</a></div>
-
-    <div >
-
+    <div>
         <button ng-click="addNewRoom()" class="btn btn-primary">Add Room</button>
-
     </div>
-    <div ng-repeat="user in online">
-        {{user}}
-        </div>
 </div>
+
 <div class="container app ">
     <h3>Editor</h3>
-
-    <text-angular-toolbar name="editorToolbar" ng-click="sendContent(htmlcontent)"></text-angular-toolbar>
-    <div id=editor text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent"
-         ta-target-toolbars='editorToolbar' ng-keyup="sendContent(htmlcontent)" ta-disabled='disabled'></div>
+    <text-angular-toolbar name="editorToolbar" ng-click="sendContent(vm.htmlcontent)"></text-angular-toolbar>
+    <div id=editor text-angular="text-angular" name="vm.htmlcontent" ng-model="vm.htmlcontent"
+         ta-target-toolbars='editorToolbar' ng-keyup="sendContent(vm.htmlcontent)"></div>
 </div>
 
+<div style="float:right;width:100px;">
+    <h3>Online</h3>
+
+    <div ng-repeat="user in vm.online">
+        {{user}}
+    </div>
+</div>
 
 

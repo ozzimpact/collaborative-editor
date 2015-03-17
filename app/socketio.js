@@ -13,7 +13,7 @@ module.exports.attach = function (server) {
         'log level': 3
     });
 
-    var roomObj;
+
     sio.set('transports', ['websocket']);
     sio.set('resource', '/socket.io');
 
@@ -21,15 +21,8 @@ module.exports.attach = function (server) {
 
         redisClient.hkeys('rooms', function (err, reply) {
             if (reply)
-                socket.emit('updateRooms', reply);
+                sio.sockets.emit('updateRooms', reply);
         });
-
-        if (socket.room != undefined)
-            redisClient.hkeys(socket.room, function (err, reply) {
-                if (reply)
-                    socket.to(socket.room).emit('onlineUsers', reply);
-            });
-
 
         socket.on('addRoom', function (data) {
             var payload = {
@@ -39,19 +32,17 @@ module.exports.attach = function (server) {
             };
 
             redisClient.hset('rooms', data.roomName, JSON.stringify(payload), function (err, reply) {
+                if (err) {
+                    console.log(err);
+                }
                 if (reply) {
                     redisClient.hkeys('rooms', function (err, reply) {
                         if (reply)
-                            socket.broadcast.emit('updateRooms', reply);
+                            sio.sockets.emit('updateRooms', reply);
                     });
                 }
-
             });
 
-            redisClient.hkeys('rooms', function (err, reply) {
-                if (reply)
-                    socket.emit('updateRooms', reply);
-            });
 
         });
         socket.on('changeRoom', function (room, user) {
@@ -61,50 +52,43 @@ module.exports.attach = function (server) {
             redisClient.hdel(socket.room, user, function (err, reply) {
                 if (reply)
                     redisClient.hkeys(socket.room, function (err, reply) {
-                        socket.to(socket.room).emit('onlineUsers', reply);
-                        console.log(reply);
+                        sio.sockets.to(socket.room).emit('onlineUsers', reply);
                     });
             });
-
             socket.broadcast.to(socket.room).emit('informRoom', user + ' has left.');
-            redisClient.hkeys(socket.room, function (err, reply) {
-                socket.to(socket.room).emit('onlineUsers', reply);
-                console.log(reply);
-            });
 
             socket.join(room);
             if (socket.room != room) {
+                socket.room = room;
                 redisClient.hset(room, user, date, function (err, reply) {
                     redisClient.hkeys(room, function (err, reply) {
-                        socket.broadcast.to(room).emit('onlineUsers', reply);
+                        sio.sockets.to(room).emit('onlineUsers', reply)
+
                     });
                 });
-                redisClient.hkeys(room, function (err, reply) {
-                    socket.to(room).emit('onlineUsers', reply);
-                    console.log(reply);
-                    socket.room = room;
+                redisClient.hget(socket.room, 'text', function (err, reply) {
+                    if(reply)
+                        sio.sockets.to(socket.room).emit('updateConversation', JSON.parse(reply));
                 });
                 socket.broadcast.to(room).emit('informRoom', user + ' has connected.');
 
             }
         });
 
+        socket.on('textChanged', function (payload) {
 
-        socket.on('textChanged', function (data) {
-            console.log(data);
-            //    var payload = {
-            //        //'writer': data.email,
-            //        'context': data,
-            //        'created': new Date(),
-            //        'room': 'public'
-            //    };
-            //    redisClient.hset('textHistory', 'public', JSON.stringify(payload), function (err, reply) {
-            //        if (reply) {
-            //            redisClient.hgetAll('textHistory', function (err, reply) {
-            socket.broadcast.to(socket.room).emit('updateConversation', data);
-            //            });
-            //        }
-            //    });
+            redisClient.hset(socket.room,'text',JSON.stringify(payload.content), function (err, reply) {
+                if(err)
+                console.log(err);
+
+            });
+                redisClient.hget(socket.room, 'text', function (err, reply) {
+                    if(reply)
+                        socket.broadcast.to(socket.room).emit('updateConversation', JSON.parse(reply));
+                    console.log(reply);
+                });
+
+
         });
     });
 };

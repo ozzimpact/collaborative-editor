@@ -85,13 +85,14 @@ body {
 
 .container.app {
     float: left;
-    width: 1000px;
+    width: 900px;
     border-left: 1px solid black;
     border-right: 1px solid black;
 }
 #editor{
     margin-left: 5px;
 }
+
 .ta-editor {
      min-height: 300px;
      height: auto;
