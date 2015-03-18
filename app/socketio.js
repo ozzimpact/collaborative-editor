@@ -67,7 +67,7 @@ module.exports.attach = function (server) {
 
                     });
                 });
-                redisClient.hget(socket.room, 'text', function (err, reply) {
+                redisClient.hget('history', socket.room, function (err, reply) {
                     if(reply)
                         sio.sockets.to(socket.room).emit('updateConversation', JSON.parse(reply));
                     else
@@ -80,12 +80,12 @@ module.exports.attach = function (server) {
 
         socket.on('textChanged', function (payload) {
 
-            redisClient.hset(socket.room,'text',JSON.stringify(payload.content), function (err, reply) {
+            redisClient.hset('history', socket.room,JSON.stringify(payload.content), function (err, reply) {
                 if(err)
                 console.log(err);
 
             });
-                redisClient.hget(socket.room, 'text', function (err, reply) {
+                redisClient.hget('history', socket.room, function (err, reply) {
                     if(reply)
                         socket.broadcast.to(socket.room).emit('updateConversation', JSON.parse(reply));
                     console.log(reply);
