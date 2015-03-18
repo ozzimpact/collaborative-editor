@@ -47,15 +47,16 @@ module.exports.attach = function (server) {
         });
         socket.on('changeRoom', function (room, user) {
             var date = new Date();
+            var oldRoom = socket.room;
 
-            socket.leave(socket.room);
-            redisClient.hdel(socket.room, user, function (err, reply) {
+            socket.leave(oldRoom);
+            redisClient.hdel(oldRoom, user, function (err, reply) {
                 if (reply)
-                    redisClient.hkeys(socket.room, function (err, reply) {
-                        sio.sockets.to(socket.room).emit('onlineUsers', reply);
+                    redisClient.hkeys(oldRoom, function (err, reply) {
+                        sio.sockets.to(oldRoom).emit('onlineUsers', reply);
                     });
             });
-            socket.broadcast.to(socket.room).emit('informRoom', user + ' has left.');
+            socket.broadcast.to(oldRoom).emit('informRoom', user + ' has left.');
 
             socket.join(room);
             if (socket.room != room) {
@@ -69,6 +70,8 @@ module.exports.attach = function (server) {
                 redisClient.hget(socket.room, 'text', function (err, reply) {
                     if(reply)
                         sio.sockets.to(socket.room).emit('updateConversation', JSON.parse(reply));
+                    else
+                        sio.sockets.to(socket.room).emit('updateConversation','');
                 });
                 socket.broadcast.to(room).emit('informRoom', user + ' has connected.');
 
