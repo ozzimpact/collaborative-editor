@@ -88,7 +88,7 @@ module.exports.attach = function (server) {
                 redisClient.hget('history', socket.room, function (err, reply) {
                     if(reply)
                         socket.broadcast.to(socket.room).emit('updateConversation', JSON.parse(reply));
-                    console.log(reply);
+                   
                 });
 
 

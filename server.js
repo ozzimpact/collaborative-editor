@@ -1,5 +1,5 @@
 var express = require('express'),
-    port = process.env.PORT || 8080,
+    port = process.env.PORT || 8000,
     mongoose = require('mongoose'),
     passport = require('passport'),
     flash = require('connect-flash'),
