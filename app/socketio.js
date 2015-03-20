@@ -48,7 +48,7 @@ module.exports.attach = function (server) {
         socket.on('changeRoom', function (room, user) {
             var date = new Date();
             var oldRoom = socket.room;
-
+            socket.user = user;
             socket.leave(oldRoom);
             redisClient.hdel(oldRoom, user, function (err, reply) {
                 if (reply)
@@ -93,5 +93,18 @@ module.exports.attach = function (server) {
 
 
         });
+        socket.on('disconnect', function () {
+            var oldRoom = socket.room;
+            var user = socket.user;
+            socket.leave(oldRoom);
+            redisClient.hdel(oldRoom, user, function (err, reply) {
+                if (reply)
+                    redisClient.hkeys(oldRoom, function (err, reply) {
+                        sio.sockets.to(oldRoom).emit('onlineUsers', reply);
+                    });
+            });
+            socket.broadcast.to(oldRoom).emit('informRoom', user + ' has left.');
+        });
     });
+
 };
