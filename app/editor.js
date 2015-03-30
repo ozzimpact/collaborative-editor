@@ -18,8 +18,8 @@
 
         $scope.sendContent = function (content) {
             var payload = {
-              user:$scope.vm.username,
-                content:content
+                user: $scope.vm.username,
+                content: content
             };
             socketio.emit('textChanged', payload);
         };

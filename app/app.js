@@ -1,4 +1,5 @@
-'use strict';
+(function () {
+    'use strict';
 
 /**
  * @ngdoc overview
@@ -22,3 +23,4 @@ var app = angular
         'ui-notification'
     ]);
 
+})();
