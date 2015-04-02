@@ -9,11 +9,11 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     path = require('path'),
-    configDB = require('./app/dbconfig'),
-    socketio = require('./app/socketio');
+    configDB = require('./src/js/dbconfig'),
+    socketio = require('./src/js/socketio');
 
 mongoose.connect(configDB.url);
-require('./app/passport')(passport);
+require('./src/js/passport')(passport);
 
 
 var app = express();
@@ -36,7 +36,7 @@ app.use(express.static(__dirname, 'js'));
 app.use(express.static(__dirname, 'woff'));
 
 
-require('./app/routes.js')(app, passport);
+require('./src/js/routes.js')(app, passport);
 
 var server = app.listen(port, function () {
     console.log('Express server listening on port ' + server.address().port);

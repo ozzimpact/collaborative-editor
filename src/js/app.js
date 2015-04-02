@@ -1,5 +1,3 @@
-(function () {
-    'use strict';
 
 /**
  * @ngdoc overview
@@ -22,5 +20,3 @@ var app = angular
         'btford.socket-io',
         'ui-notification'
     ]);
-
-})();

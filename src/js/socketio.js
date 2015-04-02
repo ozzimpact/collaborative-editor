@@ -68,7 +68,6 @@
                     redisClient.hset(room, user, date, function (err, reply) {
                         redisClient.hkeys(room, function (err, reply) {
                             sio.sockets.to(room).emit('onlineUsers', reply);
-
                         });
                     });
                     redisClient.hget('history', socket.room, function (err, reply) {
@@ -92,7 +91,6 @@
                 redisClient.hget('history', socket.room, function (err, reply) {
                     if (reply)
                         socket.broadcast.to(socket.room).emit('updateConversation', JSON.parse(reply));
-                    console.log(reply);
                 });
 
 
