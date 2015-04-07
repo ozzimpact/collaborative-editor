@@ -3,15 +3,15 @@
 
     var mongoose = require('mongoose');
     var bcrypt = require('bcrypt-nodejs');
-
     var userSchema = mongoose.Schema({
 
         local: {
             email: String,
-            password: String
+            password: String,
+            date: {type: Date, default: Date.now}
         }
 
-    });
+    }, {collection: 'ac_user'});
 
 
     userSchema.methods.generateHash = function (password) {

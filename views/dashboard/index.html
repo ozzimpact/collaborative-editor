@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" ng-app="RDash">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>RDash AngularJS</title>
+    <!-- STYLES -->
+    <!-- build:css lib/css/main.min.css -->
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/rdash-ui/dist/css/rdash.min.css">
+    <!-- endbuild -->
+
+    <!-- SCRIPTS -->
+    <!-- build:editorjs lib/editorjs/main.min.editorjs -->
+
+</head>
+<body ng-controller="MasterCtrl">
+<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar">
+            <li class="sidebar-main">
+                <a ng-click="toggleSidebar()">
+                    Dashboard
+                    <span class="menu-icon glyphicon glyphicon-transfer"></span>
+                </a>
+            </li>
+            <li class="sidebar-title"><span>NAVIGATION</span></li>
+            <li class="sidebar-list">
+                <a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="col-xs-6">
+                <a href="https://github.com/ozzimpact/collaborative-editor" target="_blank">
+                    Github
+                </a>
+            </div>
+            <div class="col-xs-6">
+                <a href="https://github.com/ozzimpact/collaborative-editor" target="_blank">
+                    About
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper">
+        <div class="page-content">
+
+            <!-- Header Bar -->
+            <div class="row header">
+                <div class="col-xs-12">
+                    <div class="user pull-right">
+                        <div class="item dropdown">
+                            <a href="#" class="dropdown-toggle">
+                                <img src="../../src/img/avatar.jpg">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="dropdown-header">
+                                    Oguzhan Demir
+                                </li>
+                                <li class="divider"></li>
+                                <li class="link">
+                                    <a href="/logout" ng-click="logout()">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="meta">
+                        <div class="page">
+                            Dashboard
+                        </div>
+                        <div class="breadcrumb-links">
+                            Home / Dashboard
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Header Bar -->
+
+            <!-- Main Content -->
+            <div> <% include dashboard.html %></div>
+
+        </div>
+        <!-- End Page Content -->
+    </div>
+    <!-- End Content Wrapper -->
+</div>
+<!-- End Page Wrapper -->
+</body>
+</html>
+
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="socket.io/socket.io.js"></script>
+<script src="bower_components/angular-socket-io/socket.js"></script>
+
+<script type="text/javascript" src="../../src/dashboardjs/lib/dashboard.min.js"></script>
+
+
+<script src="../../src/dashboardjs/module.js"></script>
+<script src="../../src/dashboardjs/controllers/master-ctrl.js"></script>
+
+
+

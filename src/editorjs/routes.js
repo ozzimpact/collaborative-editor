@@ -8,42 +8,40 @@
         app.get('/', function (req, res) {
 
             if (req.isAuthenticated()) {
-                res.render('index.html', {
+                res.render('editor/index.html', {
                     user: req.user
                 });
             } else {
-                res.render('login.html');
+                res.render('editor/login.html');
             }
 
         });
 
         app.get('/index', isLoggedIn, function (req, res) {
-            res.render('index.html', {
+            res.render('editor/index.html', {
                 user: req.user
             });
         });
 
 
-        app.get('/api', isLoggedIn, function (req, res) {
-            redisClient.hgetall('frameworks', function (err, object) {
-                res.json(object);
-            });
-        });
 
-        app.post('/api', function (req, res) {
-            redisClient.hmset('try1', {
-                'userEmail': req.user.local.email,
-                'password': req.user.local.password,
-                'text': 'this is an example of redis post with hmset.'
-            }, function (reply, err) {
-                console.log(reply);
-            });
-
-        });
+        //app.post('/api', function (req, res) {
+        //    redisClient.hmset('try1', {
+        //        'userEmail': req.user.local.email,
+        //        'password': req.user.local.password,
+        //        'text': 'this is an example of redis post with hmset.'
+        //    }, function (reply, err) {
+        //        console.log(reply);
+        //    });
+        //
+        //});
         app.get('/userEmail', isLoggedIn, function (req, res) {
             res.json(req.user.local.email);
         });
 
+        app.get('/request', isLoggedIn, function (req, res) {
+           res.json()
+        });
 
         app.get('/logout', function (req, res) {
             req.logout();
@@ -52,7 +50,7 @@
 
 
         app.get('/login', function (req, res) {
-            res.render('login.html', {message: req.flash('loginMessage')});
+            res.render('editor/login.html', {message: req.flash('loginMessage')});
         });
 
 
@@ -63,7 +61,10 @@
         }));
 
         app.get('/signup', function (req, res) {
-            res.render('signup.html', {message: req.flash('signupMessage')});
+            res.render('editor/signup.html', {message: req.flash('signupMessage')});
+        });
+        app.get('/dashboard',isLoggedIn, function (req, res) {
+            res.render('dashboard/index.html');
         });
 
 

@@ -9,17 +9,18 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
     path = require('path'),
-    configDB = require('./src/js/dbconfig'),
-    socketio = require('./src/js/socketio');
+    configDB = require('./src/editorjs/dbconfig'),
+    socketio = require('./src/editorjs/socketio');
 
 mongoose.connect(configDB.url);
-require('./src/js/passport')(passport);
+require('./src/editorjs/passport')(passport);
 
 
 var app = express();
 
 app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
+app.set('editorModels', __dirname + '/views/editor');
+app.set('dashboardModels', __dirname + '/views/dashboard');
 app.engine('html', require('ejs').renderFile);
 
 app.use(morgan('dev'));
@@ -36,7 +37,7 @@ app.use(express.static(__dirname, 'js'));
 app.use(express.static(__dirname, 'woff'));
 
 
-require('./src/js/routes.js')(app, passport);
+require('./src/editorjs/routes.js')(app, passport);
 
 var server = app.listen(port, function () {
     console.log('Express server listening on port ' + server.address().port);
