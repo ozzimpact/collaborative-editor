@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('RDash')
+    dashboardApp
         .controller('MasterCtrl', ['$scope', '$cookieStore', 'dashboardSock', function ($scope, $cookieStore, socketio) {
             /**
              * Sidebar Toggle & Cookie Control
@@ -37,6 +37,7 @@
 
             $scope.handleRequestNumber = function (reqNum) {
                 $scope.reqNum = reqNum;
+                console.log(reqNum);
             };
 
             $scope.$on('socket:requestNum', $scope.handleRequestNumber);

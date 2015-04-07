@@ -84,12 +84,18 @@
             });
 
             socket.on('textChanged', function (payload) {
-                redisClient.set('requestNumber',++reqNum, function (err, reply) {
+                redisClient.set('requestNumber', ++reqNum, function (err, reply) {
 
-                    if(err)
-                    console.log(err);
-                    else
-                    sio.sockets.emit('requestNum', reply);
+                    if (err)
+                        console.log(err);
+                    else {
+                        redisClient.get('requestNumber', function (err, reply) {
+
+                            if (reply)
+                                sio.sockets.emit('requestNum', reply);
+                        });
+                    }
+
                 });
                 redisClient.hset('history', socket.room, JSON.stringify(payload.content), function (err, reply) {
 

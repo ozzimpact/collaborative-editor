@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="RDash">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
     <!-- build:editorjs lib/editorjs/main.min.editorjs -->
 
 </head>
-<body ng-controller="MasterCtrl">
+<body ng-controller="MasterCtrl" ng-app="RDash">
 <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 
     <!-- Sidebar -->
@@ -107,6 +107,7 @@
 
 <script src="../../src/dashboardjs/module.js"></script>
 <script src="../../src/dashboardjs/controllers/master-ctrl.js"></script>
+<script src="../../src/dashboardjs/services.js"></script>
 
 
 
