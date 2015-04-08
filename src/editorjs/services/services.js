@@ -15,7 +15,7 @@
         });
     }]);
     app.factory('userService', function ($http) {
-        var baseUrl = '/userEmail';
+        var baseUrl = '/api/userEmail';
         var getUserDetail = function () {
             return $http({
                 method: 'GET',

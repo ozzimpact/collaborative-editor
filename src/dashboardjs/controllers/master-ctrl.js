@@ -2,7 +2,7 @@
     'use strict';
 
     dashboardApp
-        .controller('MasterCtrl', ['$scope', '$cookieStore', 'dashboardSock', 'requestService', function ($scope, $cookieStore, socketio, requestService) {
+        .controller('MasterCtrl', ['$scope', '$cookieStore', 'dashboardSock', 'requestService', 'roomService', function ($scope, $cookieStore, socketio, requestService, roomService) {
             /**
              * Sidebar Toggle & Cookie Control
              */
@@ -10,10 +10,13 @@
             $scope.vm = {
                 usernumber: '',
                 requestnumber: '',
-                rooms: '',
-                onlineusers: ''
+                roomnumber: '',
+                onlineusers: '',
+                rooms:[]
             };
-            $scope.usernumber = '';
+            roomService.getRooms().then(function (res) {
+                $scope.vm.rooms = res.data;
+            });
 
             $scope.bootstrap = function () {
                 $scope.handleRequestNumber();
@@ -46,16 +49,22 @@
             };
 
             $scope.handleRequestNumber = function (evt, payload) {
-                $scope.vm.requestnumber = payload;
+                requestService.getRequestNumber().then(function (res) {
+                    $scope.vm.requestnumber = res.data;
+                });
             };
 
             $scope.handleRoomNumber = function (evt, payload) {
-                $scope.vm.rooms = payload;
+                roomService.getRooms().then(function (res) {
+                    rooms = res.data;
+                    $scope.vm.roomnumber = rooms.length;
+                });
+
             };
             $scope.$on('socket:requestNum', $scope.handleRequestNumber);
             socketio.forward('requestNum', $scope);
-            $scope.$on('socket:roomNum', $scope.handleRoomNumber);
-            socketio.forward('roomNum', $scope);
+            $scope.$on('socket:updateRooms', $scope.handleRoomNumber);
+            socketio.forward('updateRooms', $scope);
 
             $scope.bootstrap();
         }]);

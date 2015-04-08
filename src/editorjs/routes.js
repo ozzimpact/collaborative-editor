@@ -22,9 +22,6 @@
                 user: req.user
             });
         });
-
-
-
         //app.post('/api', function (req, res) {
         //    redisClient.hmset('try1', {
         //        'userEmail': req.user.local.email,
@@ -35,8 +32,35 @@
         //    });
         //
         //});
-        app.get('/userEmail', isLoggedIn, function (req, res) {
+        app.get('/api/userEmail', isLoggedIn, function (req, res) {
             res.json(req.user.local.email);
+        });
+
+        app.get('/api/requestnumber', isLoggedIn, function (req, res) {
+            redisClient.get('requestNumber', function (err, reply) {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(reply);
+            });
+        });
+
+        app.get('/api/rooms/:room', function (req, res) {
+           redisClient.hkeys(req.params.room, function (err, reply) {
+               if(err)
+               console.log(err);
+               else
+               res.json(reply);
+           });
+        });
+
+        app.get('/api/rooms', function (req, res) {
+            redisClient.hkeys('rooms', function (err, reply) {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(reply);
+            });
         });
 
         app.get('/logout', function (req, res) {
@@ -59,7 +83,7 @@
         app.get('/signup', function (req, res) {
             res.render('editor/signup.html', {message: req.flash('signupMessage')});
         });
-        app.get('/dashboard',isLoggedIn, function (req, res) {
+        app.get('/dashboard', isLoggedIn, function (req, res) {
             res.render('dashboard/index.html');
         });
 

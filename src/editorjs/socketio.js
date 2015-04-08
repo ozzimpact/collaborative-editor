@@ -85,12 +85,8 @@
 
                     if (err)
                         console.log(err);
-                    else {
-                        redisClient.get('requestNumber', function (err, reply) {
-
-                            if (reply)
-                                sio.sockets.emit('requestNum', JSON.parse(reply));
-                        });
+                    else if(reply){
+                        sio.sockets.emit('requestNum');
                     }
 
                 });

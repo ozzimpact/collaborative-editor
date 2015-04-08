@@ -16,7 +16,7 @@
         }]);
 
     dashboardApp.factory('requestService', function ($http) {
-        var baseUrl = '/request';
+        var baseUrl = '/api/requestnumber';
         var getRequestNumber = function () {
             return $http({
                 method: 'GET',
@@ -26,6 +26,19 @@
 
         return {
             getRequestNumber: getRequestNumber
+        };
+    });
+
+    dashboardApp.factory('roomService', function ($http) {
+        var baseUrl = '/api/rooms';
+        var getRooms = function () {
+            return $http({
+                method: 'GET',
+                url: baseUrl
+            });
+        };
+        return {
+            getRooms: getRooms
         };
     });
 
