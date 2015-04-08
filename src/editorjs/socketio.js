@@ -16,11 +16,8 @@
             adapter: redisAdapter({pubClient: redisPubClient, subClient: redisSubClient}),
             'log level': 3
         });
-
-
         sio.set('transports', ['websocket']);
         sio.set('resource', '/socket.io');
-
         sio.on('connection', function (socket) {
 
             redisClient.hkeys('rooms', function (err, reply) {
@@ -84,7 +81,7 @@
             });
 
             socket.on('textChanged', function (payload) {
-                redisClient.set('requestNumber', ++reqNum, function (err, reply) {
+                redisClient.set('requestNumber', JSON.stringify(++reqNum), function (err, reply) {
 
                     if (err)
                         console.log(err);
@@ -92,7 +89,7 @@
                         redisClient.get('requestNumber', function (err, reply) {
 
                             if (reply)
-                                sio.sockets.emit('requestNum', reply);
+                                sio.sockets.emit('requestNum', JSON.parse(reply));
                         });
                     }
 

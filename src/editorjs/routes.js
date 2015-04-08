@@ -39,10 +39,6 @@
             res.json(req.user.local.email);
         });
 
-        app.get('/request', isLoggedIn, function (req, res) {
-           res.json()
-        });
-
         app.get('/logout', function (req, res) {
             req.logout();
             res.redirect('/');
