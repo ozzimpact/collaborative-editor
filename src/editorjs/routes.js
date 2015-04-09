@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    var redis = require('redis'),
-        redisClient = redis.createClient();
-
+    var redis = require('redis');
+    var redisClient = redis.createClient();
+    var User = require('./user');
     module.exports = function (app, passport) {
         app.get('/', function (req, res) {
 
@@ -46,12 +46,12 @@
         });
 
         app.get('/api/rooms/:room', function (req, res) {
-           redisClient.hkeys(req.params.room, function (err, reply) {
-               if(err)
-               console.log(err);
-               else
-               res.json(reply);
-           });
+            redisClient.hkeys(req.params.room, function (err, reply) {
+                if (err)
+                    console.log(err);
+                else
+                    res.json(reply);
+            });
         });
 
         app.get('/api/rooms', function (req, res) {
@@ -60,6 +60,12 @@
                     console.log(err);
                 else
                     res.json(reply);
+            });
+        });
+
+        app.get('/api/users', function (req, res) {
+            User.find({}, function (err, reply) {
+               res.json(reply);
             });
         });
 

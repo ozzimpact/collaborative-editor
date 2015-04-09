@@ -37,8 +37,28 @@
                 url: baseUrl
             });
         };
+        var getRoomUsers = function (room) {
+            return $http({
+                method: 'GET',
+                url: baseUrl + '/' + room
+            });
+        };
         return {
-            getRooms: getRooms
+            getRooms: getRooms,
+            getRoomUsers: getRoomUsers
+        };
+    });
+
+    dashboardApp.factory('usersService', function ($http) {
+        var baseUrl = '/api/users';
+        var getUsers = function () {
+            return $http({
+                method: 'GET',
+                url: baseUrl
+            });
+        };
+        return {
+            getUsers: getUsers
         };
     });
 

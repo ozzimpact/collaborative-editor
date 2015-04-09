@@ -2,8 +2,7 @@
  * Widget Directive
  */
 
-angular
-    .module('RDash')
+dashboardApp
     .directive('rdWidget', rdWidget);
 
 function rdWidget() {

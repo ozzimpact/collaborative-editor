@@ -13,7 +13,6 @@ var express = require('express'),
     socketio = require('./src/editorjs/socketio');
 
 mongoose.connect(configDB.url);
-require('./src/editorjs/passport')(passport);
 
 
 var app = express();
@@ -42,5 +41,8 @@ require('./src/editorjs/routes.js')(app, passport);
 var server = app.listen(port, function () {
     console.log('Express server listening on port ' + server.address().port);
 
-    socketio.attach(server);
+    var sio = socketio.attach(server);
+    require('./src/editorjs/passport')(sio, passport);
 });
+
+

@@ -1,9 +1,7 @@
 /**
  * Widget Header Directive
  */
-
-angular
-    .module('RDash')
+dashboardApp
     .directive('rdWidgetHeader', rdWidgetTitle);
 
 function rdWidgetTitle() {

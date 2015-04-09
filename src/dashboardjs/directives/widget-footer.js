@@ -1,9 +1,7 @@
 /**
  * Widget Footer Directive
  */
-
-angular
-    .module('RDash')
+dashboardApp
     .directive('rdWidgetFooter', rdWidgetFooter);
 
 function rdWidgetFooter() {

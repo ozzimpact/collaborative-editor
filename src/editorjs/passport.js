@@ -5,9 +5,7 @@
 
     var User = require('./user');
 
-    module.exports = function (passport) {
-
-
+    module.exports = function (sio,passport) {
         passport.serializeUser(function (user, done) {
             done(null, user.id);
         });
@@ -44,6 +42,7 @@
                                 throw err;
                             return done(null, newUser);
                         });
+                        sio.sockets.emit('newUser');
                     }
 
                 });

@@ -16,7 +16,7 @@
     <!-- build:editorjs lib/editorjs/main.min.editorjs -->
 
 </head>
-<body ng-controller="MasterCtrl" ng-app="RDash">
+<body ng-controller="DashboardCtrl" ng-app="RDash">
 <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
 
     <!-- Sidebar -->
@@ -101,9 +101,17 @@
 <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="socket.io/socket.io.js"></script>
 <script src="bower_components/angular-socket-io/socket.js"></script>
-<script type="text/javascript" src="../../src/dashboardjs/lib/dashboard.min.js"></script>
+
+
 <script type="text/javascript" src="../../src/dashboardjs/module.js"></script>
 <script type="text/javascript" src="../../src/dashboardjs/services.js"></script>
-<script type="text/javascript" src="../../src/dashboardjs/controllers/master-ctrl.js"></script>
+<script type="text/javascript" src="../../src/dashboardjs/controllers/DashboardCtrl.js"></script>
+<script type="text/javascript" src="../../src/dashboardjs/directives/loading.js"></script>
+<script type="text/javascript" src="../../src/dashboardjs/directives/widget-body.js"></script>
+<script type="text/javascript" src="../../src/dashboardjs/directives/widget-footer.js"></script>
+<script type="text/javascript" src="../../src/dashboardjs/directives/widget-header.js"></script>
+<script type="text/javascript" src="../../src/dashboardjs/directives/widget.js"></script>
+
+
 
 

@@ -18,6 +18,7 @@
         });
         sio.set('transports', ['websocket']);
         sio.set('resource', '/socket.io');
+
         sio.on('connection', function (socket) {
 
             redisClient.hkeys('rooms', function (err, reply) {
@@ -78,6 +79,7 @@
                     });
                     socket.broadcast.to(room).emit('informRoom', user + ' has connected.');
                 }
+                sio.sockets.emit('usernumberchanged');
             });
 
             socket.on('textChanged', function (payload) {
@@ -101,5 +103,7 @@
                 });
             });
         });
+        return sio;
     };
+
 })();
