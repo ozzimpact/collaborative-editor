@@ -58,13 +58,13 @@
                             <th>Users</th>
                         </tr>
                         </thead>
-                        <tbody ng-repeat="room in vm.roomnames">
+                        <tbody ng-repeat="room in vm.roomNames">
                         <tr>
                             <td>{{room}}</td>
-                            <td>{{vm.numberOfUsersInRooms[$index]}}</td>
-                            <td ng-hide="vm.numberOfUsersInRooms[$index] === 0"><span class="text-success"><i
+                            <td>{{vm.numberOfUsersInRooms[room]}}</td>
+                            <td ng-hide="vm.numberOfUsersInRooms[room] === 0"><span class="text-success"><i
                                     class="fa fa-check"></i></span></td>
-                            <td ng-hide="vm.numberOfUsersInRooms[$index] !== 0"><span class="text-warning"><i
+                            <td ng-hide="vm.numberOfUsersInRooms[room] !== 0"><span class="text-warning"><i
                                     class="fa fa-warning"></i></span></td>
                         </tr>
                         </tbody>
@@ -90,10 +90,6 @@
                         <tr>
                             <td class="text-center">{{$index + 1}}</td>
                             <td>{{user}}</td>
-                            <td ng-show="vm.namesOfUsersInRooms.contains(user)"><span class="text-success"><i
-                                    class="fa fa-check"></i></span></td>
-                            <td ng-show="!vm.namesOfUsersInRooms.contains(user)"><span class="text-warning"><i
-                                    class="fa fa-warning"></i></span></td>
                         </tr>
                         </tbody>
                     </table>

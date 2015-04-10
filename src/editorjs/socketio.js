@@ -78,8 +78,9 @@
                             sio.sockets.to(socket.room).emit('updateConversation', '');
                     });
                     socket.broadcast.to(room).emit('informRoom', user + ' has connected.');
+                    sio.sockets.emit('usernumberchanged');
                 }
-                sio.sockets.emit('usernumberchanged');
+
             });
 
             socket.on('textChanged', function (payload) {

@@ -16,7 +16,7 @@
         }]);
 
     dashboardApp.factory('requestService', function ($http) {
-        var baseUrl = '/api/requestnumber';
+        var baseUrl = '/api/requestNumber';
         var getRequestNumber = function () {
             return $http({
                 method: 'GET',

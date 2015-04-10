@@ -36,7 +36,7 @@
             res.json(req.user.local.email);
         });
 
-        app.get('/api/requestnumber', isLoggedIn, function (req, res) {
+        app.get('/api/requestNumber', isLoggedIn, function (req, res) {
             redisClient.get('requestNumber', function (err, reply) {
                 if (err)
                     console.log(err);

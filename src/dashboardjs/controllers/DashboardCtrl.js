@@ -5,39 +5,36 @@
 
         var mobileView = 992;
         $scope.vm = {
-            usernumber: '',
+            userNumber: '',
             users: [],
-            requestnumber: '',
-            roomnumber: '',
-            onlineusers: '',
-            roomnames: [],
+            requestNumber: '',
+            roomNumber: '',
+            onlineUserNumber: '',
+            roomNames: [],
             numberOfUsersInRooms: [],
-            namesOfUsersInRooms: []
+            namesOfUsersInRooms: $scope.vm.users
         };
 
         $scope.getRoomStatistics = function () {
             roomService.getRooms().then(function (res) {
-                $scope.vm.roomnames = res.data;
-                $scope.vm.onlineusers = 0;
-                $scope.vm.roomnames.forEach(function (room) {
+                $scope.vm.roomNames = res.data;
+                $scope.vm.onlineUserNumber = 0;
+                $scope.vm.roomNames.forEach(function (room) {
                     roomService.getRoomUsers(room).then(function (res) {
-                        $scope.vm.numberOfUsersInRooms.push(res.data.length);
-                        $scope.vm.onlineusers += res.data.length;
-                        res.data.forEach(function (obj) {
-                            $scope.vm.namesOfUsersInRooms.push(obj);
-
-                        })
+                        $scope.vm.numberOfUsersInRooms[room] = res.data.length;
+                        $scope.vm.onlineUserNumber += res.data.length;
+                        //$scope.vm.namesOfUsersInRooms[]
                     });
                 });
             });
-            console.log($scope.vm.namesOfUsersInRooms.indexOf('oguzhandemir92@hoasdasd'));
+
         };
         $scope.getUserDetail = function () {
-            usersService.getUsers().then(function (res) {
+            usersService.getUsers().then(function (res) {ş
                 res.data.forEach(function (obj) {
                     $scope.vm.users.push(obj.local.email);
                 });
-                $scope.vm.usernumber = res.data.length;
+                $scope.vm.userNumber = res.data.length;
             });
         };
 
@@ -74,14 +71,14 @@
 
         $scope.handleRequestNumber = function (evt, payload) {
             requestService.getRequestNumber().then(function (res) {
-                $scope.vm.requestnumber = res.data;
+                $scope.vm.requestNumber = res.data;
             });
         };
 
         $scope.handleRoomNumber = function (evt, payload) {
             roomService.getRooms().then(function (res) {
-                $scope.vm.roomnames = res.data;
-                $scope.vm.roomnumber = $scope.vm.roomnames.length;
+                $scope.vm.roomNames = res.data;
+                $scope.vm.roomNumber = $scope.vm.roomNames.length;
                 $scope.getRoomStatistics();
             });
         };
