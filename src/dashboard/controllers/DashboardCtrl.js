@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function DashboardCtrl($scope, $cookieStore, socketio, requestService, roomService, usersService) {
+    function DashboardCtrl($scope, $cookieStore, socketio, requestService, roomService, userService) {
 
         var mobileView = 992;
         $scope.vm = {
@@ -11,8 +11,7 @@
             roomNumber: '',
             onlineUserNumber: '',
             roomNames: [],
-            numberOfUsersInRooms: [],
-            namesOfUsersInRooms: $scope.vm.users
+            numberOfUsersInRooms: []
         };
 
         $scope.getRoomStatistics = function () {
@@ -30,9 +29,9 @@
 
         };
         $scope.getUserDetail = function () {
-            usersService.getUsers().then(function (res) {ş
+            userService.getUsers().then(function (res) {
                 res.data.forEach(function (obj) {
-                    $scope.vm.users.push(obj.local.email);
+                    $scope.vm.users.push(obj);
                 });
                 $scope.vm.userNumber = res.data.length;
             });
@@ -48,7 +47,7 @@
         $scope.getWidth = function () {
             return window.innerWidth;
         };
-        $scope.$watch($scope.getWidth, function (newValue, oldValue) {
+        $scope.$watch($scope.getWidth, function (newValue) {
             if (newValue >= mobileView) {
                 if (angular.isDefined($cookieStore.get('toggle'))) {
                     $scope.toggle = !$cookieStore.get('toggle') ? false : true;
@@ -69,20 +68,20 @@
             $scope.$apply();
         };
 
-        $scope.handleRequestNumber = function (evt, payload) {
+        $scope.handleRequestNumber = function (evt) {
             requestService.getRequestNumber().then(function (res) {
                 $scope.vm.requestNumber = res.data;
             });
         };
 
-        $scope.handleRoomNumber = function (evt, payload) {
+        $scope.handleRoomNumber = function (evt) {
             roomService.getRooms().then(function (res) {
                 $scope.vm.roomNames = res.data;
                 $scope.vm.roomNumber = $scope.vm.roomNames.length;
                 $scope.getRoomStatistics();
             });
         };
-        $scope.handleUsersChanged = function (evt, payload) {
+        $scope.handleUsersChanged = function (evt) {
             $scope.getRoomStatistics();
         };
 
@@ -99,8 +98,8 @@
         $scope.bootstrap();
     }
 
-    dashboardApp
-        .controller('DashboardCtrl', ['$scope', '$cookieStore', 'dashboardSock', 'requestService', 'roomService', 'usersService', DashboardCtrl]);
-
-
+    DashboardCtrl.$inject = ['$scope', '$cookieStore', 'dashboardSock', 'requestService', 'roomService', 'userService'];
+    angular
+        .module('RDash')
+        .controller('DashboardCtrl', DashboardCtrl);
 })();

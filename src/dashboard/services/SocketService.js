@@ -1,9 +1,7 @@
 (function () {
     'use strict';
 
-
-    app.factory('collaSocket', ['socketFactory', function (socketFactory) {
-
+    function dashboardSocketService(socketFactory) {
         var address = window.location.protocol + '//' + window.location.host;
         var details = {
             resource: (window.location.pathname.split('/').slice(0, -1).join('/') + '/socket.io').substring(1),
@@ -13,19 +11,10 @@
         return socketFactory({
             ioSocket: socketInstance
         });
-    }]);
-    app.factory('userService', function ($http) {
-        var baseUrl = '/api/userEmail';
-        var getUserDetail = function () {
-            return $http({
-                method: 'GET',
-                url: baseUrl
-            });
-        };
+    }
 
-        return {
-            getUserDetail: getUserDetail
-        };
-    });
-
+    dashboardSocketService.$inject = ['socketFactory'];
+    angular
+        .module('RDash')
+        .factory('dashboardSock', dashboardSocketService);
 })();

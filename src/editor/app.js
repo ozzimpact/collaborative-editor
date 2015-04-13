@@ -1,5 +1,4 @@
-
-var app = angular
+angular
     .module('collaborativeEditor', [
         'ngAnimate',
         'ngCookies',

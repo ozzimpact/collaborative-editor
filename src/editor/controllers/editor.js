@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    app.controller('EditorCtrl', ['$scope', 'collaSocket', 'userService', 'Notification', function ($scope, socketio, userService, Notification) {
+    function EditorCtrl($scope, socketio, userService, Notification) {
         $scope.vm = {
             htmlcontent: '',
             username: '',
@@ -59,6 +59,11 @@
         socketio.forward('onlineUsers', $scope);
 
         $scope.bootstrap();
-    }]);
+    }
+
+    EditorCtrl.$inject = ['$scope', 'editorSocketService', 'userService', 'Notification'];
+    angular
+        .module('collaborativeEditor')
+        .controller('EditorCtrl', EditorCtrl);
 })();
 

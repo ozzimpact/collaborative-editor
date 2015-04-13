@@ -1,13 +1,12 @@
 (function () {
     'use strict';
 
-    //todo var all of them
-    var io = require('socket.io'),
-        redis = require('redis'),
-        redisClient = redis.createClient(),
-        redisPubClient = redis.createClient(),
-        redisSubClient = redis.createClient(),
-        redisAdapter = require('socket.io-redis');
+    var io = require('socket.io');
+    var redis = require('redis');
+    var redisClient = redis.createClient();
+    var redisPubClient = redis.createClient();
+    var redisSubClient = redis.createClient();
+    var redisAdapter = require('socket.io-redis');
     var reqNum = 0;
 
     module.exports.attach = function (server) {
@@ -88,7 +87,7 @@
 
                     if (err)
                         console.log(err);
-                    else if(reply){
+                    else if (reply) {
                         sio.sockets.emit('requestNum');
                     }
 
