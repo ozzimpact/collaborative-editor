@@ -29,6 +29,7 @@
 
         };
         $scope.getUserDetail = function () {
+          $scope.vm.users = [];
             userService.getUsers().then(function (res) {
                 res.data.forEach(function (obj) {
                     $scope.vm.users.push(obj);
