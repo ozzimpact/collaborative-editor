@@ -16,14 +16,14 @@
     <!-- build:editorjs lib/editorjs/main.min.editorjs -->
 
 </head>
-<body ng-controller="DashboardCtrl" ng-app="RDash">
-<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+<body ng-controller="DashboardCtrl as vm" ng-app="RDash">
+<div id="page-wrapper" ng-class="{'open': vm.toggle}" ng-cloak>
 
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <ul class="sidebar">
             <li class="sidebar-main">
-                <a ng-click="toggleSidebar()">
+                <a ng-click="vm.toggleSidebar()">
                     Dashboard
                     <span class="menu-icon glyphicon glyphicon-transfer"></span>
                 </a>

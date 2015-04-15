@@ -2,101 +2,109 @@
     'use strict';
 
     function DashboardCtrl($scope, $cookieStore, socketio, requestService, roomService, userService) {
-
+        var vm = this;
         var mobileView = 992;
-        $scope.vm = {
-            userNumber: '',
-            users: [],
-            requestNumber: '',
-            roomNumber: '',
-            onlineUserNumber: '',
-            roomNames: [],
-            numberOfUsersInRooms: []
-        };
 
-        $scope.getRoomStatistics = function () {
+        vm.userNumber = '';
+        vm.users = [];
+        vm.requestNumber = '';
+        vm.roomNumber = '';
+        vm.roomNames = [];
+        vm.numberOfUsersInRooms = [];
+        vm.getRoomStatistics = getRoomStatistics;
+        vm.getUserDetail = getUserDetail;
+        vm.bootstrap = bootstrap;
+        vm.getWidth = getWidth;
+        vm.toggleSidebar = toggleSidebar;
+        vm.handleRequestNumber = handleRequestNumber;
+        vm.handleRoomNumber = handleRoomNumber;
+        vm.handleUsersChanged = handleUsersChanged;
+
+        function getRoomStatistics() {
             roomService.getRooms().then(function (res) {
-                $scope.vm.roomNames = res.data;
-                $scope.vm.onlineUserNumber = 0;
-                $scope.vm.roomNames.forEach(function (room) {
+                vm.roomNames = res.data;
+                vm.onlineUserNumber = 0;
+                vm.roomNames.forEach(function (room) {
                     roomService.getRoomUsers(room).then(function (res) {
-                        $scope.vm.numberOfUsersInRooms[room] = res.data.length;
-                        $scope.vm.onlineUserNumber += res.data.length;
+                        vm.numberOfUsersInRooms[room] = res.data.length;
+                        vm.onlineUserNumber += res.data.length;
                         //$scope.vm.namesOfUsersInRooms[]
                     });
                 });
             });
+        }
 
-        };
-        $scope.getUserDetail = function () {
-          $scope.vm.users = [];
+        function getUserDetail() {
+            vm.users = [];
             userService.getUsers().then(function (res) {
                 res.data.forEach(function (obj) {
-                    $scope.vm.users.push(obj);
+                    vm.users.push(obj);
                 });
-                $scope.vm.userNumber = res.data.length;
+                vm.userNumber = res.data.length;
             });
-        };
+        }
 
-        $scope.bootstrap = function () {
-            $scope.getUserDetail();
-            $scope.handleRequestNumber();
-            $scope.handleRoomNumber();
-            $scope.getRoomStatistics();
-        };
+        function bootstrap() {
+            vm.getUserDetail();
+            vm.handleRequestNumber();
+            vm.handleRoomNumber();
+            vm.getRoomStatistics();
+        }
 
-        $scope.getWidth = function () {
+        function getWidth() {
             return window.innerWidth;
-        };
-        $scope.$watch($scope.getWidth, function (newValue) {
+        }
+
+        $scope.$watch(vm.getWidth, function (newValue) {
             if (newValue >= mobileView) {
                 if (angular.isDefined($cookieStore.get('toggle'))) {
-                    $scope.toggle = !$cookieStore.get('toggle') ? false : true;
+                    vm.toggle = !$cookieStore.get('toggle') ? false : true;
                 } else {
-                    $scope.toggle = true;
+                    vm.toggle = true;
                 }
             } else {
-                $scope.toggle = false;
+                vm.toggle = false;
             }
         });
 
-        $scope.toggleSidebar = function () {
-            $scope.toggle = !$scope.toggle;
-            $cookieStore.put('toggle', $scope.toggle);
-        };
+        function toggleSidebar() {
+            vm.toggle = !vm.toggle;
+            $cookieStore.put('toggle', vm.toggle);
+        }
 
         window.onresize = function () {
             $scope.$apply();
         };
 
-        $scope.handleRequestNumber = function (evt) {
+        function handleRequestNumber(evt) {
             requestService.getRequestNumber().then(function (res) {
-                $scope.vm.requestNumber = res.data;
+                vm.requestNumber = res.data;
             });
-        };
+        }
 
-        $scope.handleRoomNumber = function (evt) {
+        function handleRoomNumber(evt) {
             roomService.getRooms().then(function (res) {
-                $scope.vm.roomNames = res.data;
-                $scope.vm.roomNumber = $scope.vm.roomNames.length;
-                $scope.getRoomStatistics();
+                vm.roomNames = res.data;
+                vm.roomNumber = vm.roomNames.length;
+                vm.getRoomStatistics();
             });
-        };
-        $scope.handleUsersChanged = function (evt) {
-            $scope.getRoomStatistics();
-        };
+        }
+
+        function handleUsersChanged(evt) {
+            vm.getRoomStatistics();
+        }
 
 
-        $scope.$on('socket:requestNum', $scope.handleRequestNumber);
+        $scope.$on('socket:requestNum', vm.handleRequestNumber);
         socketio.forward('requestNum', $scope);
-        $scope.$on('socket:updateRooms', $scope.handleRoomNumber);
+        $scope.$on('socket:updateRooms', vm.handleRoomNumber);
         socketio.forward('updateRooms', $scope);
-        $scope.$on('socket:usernumberchanged', $scope.handleUsersChanged);
+        $scope.$on('socket:usernumberchanged', vm.handleUsersChanged);
         socketio.forward('usernumberchanged', $scope);
-        $scope.$on('socket:newUser', $scope.getUserDetail);
+        $scope.$on('socket:newUser', vm.getUserDetail);
         socketio.forward('newUser', $scope);
 
-        $scope.bootstrap();
+        vm.bootstrap();
     }
 
     DashboardCtrl.$inject = ['$scope', '$cookieStore', 'dashboardSock', 'requestService', 'roomService', 'userService'];
