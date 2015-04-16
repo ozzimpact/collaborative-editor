@@ -2,63 +2,74 @@
     'use strict';
 
     function EditorCtrl($scope, socketio, userService, Notification) {
-        $scope.vm = {
-            htmlcontent: '',
-            username: '',
-            currentRoom: '',
-            Rooms: null,
-            online: null
+        var vm = this;
 
-        };
-        $scope.bootstrap = function () {
+        vm.htmlcontent = '';
+        vm.username = '';
+        vm.currentRoom = '';
+        vm.Rooms = null;
+        vm.online = null;
+        vm.bootstrap = bootstrap;
+        vm.sendContent = sendContent;
+        vm.chooseRoom = chooseRoom;
+        vm.addNewRoom = addNewRoom;
+        vm.handleUpdateRooms = handleUpdateRooms;
+        vm.handleUpdateConversation = handleUpdateConversation;
+        vm.handleInformRoom = handleInformRoom;
+        vm.handleOnlineUsers = handleOnlineUsers;
+
+
+        function bootstrap() {
             userService.getUserDetail().then(function (dataResponse) {
-                $scope.vm.username = dataResponse.data;
+                vm.username = dataResponse.data;
             });
-        };
+        }
 
-        $scope.sendContent = function (content) {
+        function sendContent(content) {
             var payload = {
-                user: $scope.vm.username,
+                user: vm.username,
                 content: content
             };
             socketio.emit('textChanged', payload);
-        };
-        $scope.chooseRoom = function (room) {
-            $scope.vm.currentRoom = room;
-            socketio.emit('changeRoom', room, $scope.vm.username);
-        };
+        }
 
-        $scope.addNewRoom = function () {
-            socketio.emit('addRoom', {roomName: prompt('Room Name'), email: $scope.vm.username});
-        };
+        function chooseRoom(room) {
+            vm.currentRoom = room;
+            socketio.emit('changeRoom', room, vm.username);
+        }
 
-        $scope.handleUpdateRooms = function (evt, payload) {
-            $scope.vm.Rooms = payload;
-        };
+        function addNewRoom() {
+            socketio.emit('addRoom', {roomName: prompt('Room Name'), email: vm.username});
+        }
 
-        $scope.handleUpdateConversation = function (evt, payload) {
+        function handleUpdateRooms(evt, payload) {
+            vm.Rooms = payload;
+        }
 
-            $scope.vm.htmlcontent = payload;
-        };
+        function handleUpdateConversation(evt, payload) {
 
-        $scope.handleInformRoom = function (evt, connected) {
+            vm.htmlcontent = payload;
+        }
+
+        function handleInformRoom(evt, connected) {
             Notification.info(connected);
 
-        };
-        $scope.handleOnlineUsers = function (evt, payload) {
-            $scope.vm.online = payload;
-        };
+        }
 
-        $scope.$on('socket:updateRooms', $scope.handleUpdateRooms);
-        $scope.$on('socket:updateConversation', $scope.handleUpdateConversation);
-        $scope.$on('socket:informRoom', $scope.handleInformRoom);
-        $scope.$on('socket:onlineUsers', $scope.handleOnlineUsers);
+        function handleOnlineUsers(evt, payload) {
+            vm.online = payload;
+        }
+
+        $scope.$on('socket:updateRooms', vm.handleUpdateRooms);
+        $scope.$on('socket:updateConversation', vm.handleUpdateConversation);
+        $scope.$on('socket:informRoom', vm.handleInformRoom);
+        $scope.$on('socket:onlineUsers', vm.handleOnlineUsers);
         socketio.forward('updateRooms', $scope);
         socketio.forward('updateConversation', $scope);
         socketio.forward('informRoom', $scope);
         socketio.forward('onlineUsers', $scope);
 
-        $scope.bootstrap();
+        vm.bootstrap();
     }
 
     EditorCtrl.$inject = ['$scope', 'editorSocketService', 'userService', 'Notification'];

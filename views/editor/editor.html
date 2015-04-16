@@ -3,17 +3,17 @@
 
     <div id="rooms"></div>
     <div ng-repeat="room in vm.Rooms">
-        <a href="#" ng-click="chooseRoom(room)">{{room}}</a></div>
+        <a href="#" ng-click="vm.chooseRoom(room)">{{room}}</a></div>
     <div>
-        <button ng-click="addNewRoom()" class="btn btn-primary">Add Room</button>
+        <button ng-click="vm.addNewRoom()" class="btn btn-primary">Add Room</button>
     </div>
 </div>
 
 <div class="container app ">
     <h3>Editor</h3>
-    <text-angular-toolbar name="editorToolbar" ng-click="sendContent(vm.htmlcontent)"></text-angular-toolbar>
+    <text-angular-toolbar name="editorToolbar" ng-click="vm.sendContent(vm.htmlcontent)"></text-angular-toolbar>
     <div id=editor text-angular="text-angular" name="vm.htmlcontent" ng-model="vm.htmlcontent"
-         ta-target-toolbars='editorToolbar' ng-keyup="sendContent(vm.htmlcontent)"></div>
+         ta-target-toolbars='editorToolbar' ng-keyup="vm.sendContent(vm.htmlcontent)"></div>
 </div>
 
 <div style="float:right;width:100px;">

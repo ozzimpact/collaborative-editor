@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../../public/stylesheets/textAngular.css">
 
 </head>
-<body ng-app="collaborativeEditor" ng-controller="EditorCtrl">
+<body ng-app="collaborativeEditor" ng-controller="EditorCtrl as vm">
 <div class="header">
     <div class="navbar navbar-default" role="navigation">
         <div> <% include nav.html %></div>
@@ -46,7 +46,6 @@
 <script src="../../bower_components/angular-socket-io/socket.js"></script>
 
 <script src="../../src/editor/app.js"></script>
-<script src="../../src/editor/controllers/nav.js"></script>
 <script src="../../src/editor/controllers/editor.js"></script>
 <script src="../../src/editor/services/SocketService.js"></script>
 <script src="../../src/editor/services/UserService.js"></script>
