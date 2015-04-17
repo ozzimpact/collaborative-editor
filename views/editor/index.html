@@ -20,11 +20,11 @@
 <body ng-app="collaborativeEditor" ng-controller="EditorCtrl as vm">
 <div class="header">
     <div class="navbar navbar-default" role="navigation">
-        <div> <% include nav.html %></div>
+        <div ng-include="'views/editor/nav.html'"></div>
     </div>
 </div>
 <div class="container">
-    <div> <% include editor.html %></div>
+    <div ng-include="'views/editor/editor.html'"></div>
 </div>
 </body>
 </html>

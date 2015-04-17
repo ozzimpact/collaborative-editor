@@ -102,6 +102,11 @@
                         socket.broadcast.to(socket.room).emit('updateConversation', JSON.parse(reply));
                 });
             });
+
+            socket.on('disconnect', function () {
+                socket.leave(socket.room);
+                sio.sockets.emit('usernumberchanged');
+            });
         });
         return sio;
     };
