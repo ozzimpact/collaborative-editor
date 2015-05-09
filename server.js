@@ -10,10 +10,13 @@ var express = require('express'),
   session = require('express-session'),
   path = require('path'),
   configDB = require('./src/server/dbconfig'),
+  cluster = require('cluster'),
   socketio = require('./src/server/socketio');
 
 mongoose.connect(configDB.url);
 
+var isWin = /^win/.test(process.platform),
+num_processes = require('os').cpus().length;
 
 var app = express();
 
@@ -42,9 +45,25 @@ app.use(express.static(__dirname, 'woff'));
 
 require('./src/server/routes.js')(app, passport);
 
+if(isWin)
+  bootstrap();
+else
+{
+  if(cluster.isMaster){
+    console.log(num_processes);
+     for (var i = 0; i < num_processes; i++) {
+           cluster.fork();
+         }
+         else
+         bootstrap();
+}
+
+function bootstrap(){
+
 var server = app.listen(port, function() {
   console.log('Express server listening on port ' + server.address().port);
 
   var sio = socketio.attach(server);
   require('./src/server/passport')(sio, passport);
-});
+}); 
+}
