@@ -51,6 +51,7 @@
             socket.on('changeRoom', function (room, user) {
                 var date = new Date();
                 var oldRoom = socket.room;
+                socket.user = user;
                 socket.leave(oldRoom);
                 redisClient.hdel(oldRoom, user, function (err, reply) {
 
@@ -104,8 +105,13 @@
             });
 
             socket.on('disconnect', function () {
-                socket.leave(socket.room);
-                sio.sockets.emit('usernumberchanged');
+
+                redisClient.hdel(socket.room, socket.user, function (err, reply) {
+                    if (reply)
+                        sio.sockets.emit('usernumberchanged');
+                });
+
+
             });
         });
         return sio;
