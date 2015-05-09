@@ -47,17 +47,17 @@ require('./src/server/routes.js')(app, passport);
 
 if(isWin)
   bootstrap();
-else
-{
-  if(cluster.isMaster){
-    console.log(num_processes);
-     for (var i = 0; i < num_processes; i++) {
-           cluster.fork();
-         }
-         else
-         bootstrap();
-}
+else {
+    if (cluster.isMaster) {
+        console.log(num_processes);
+        for (var i = 0; i < num_processes; i++) {
+            cluster.fork();
+        }
+    }
+    else
+        bootstrap();
 
+}
 function bootstrap(){
 
 var server = app.listen(port, function() {
