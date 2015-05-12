@@ -7,6 +7,8 @@
         vm.htmlcontent = '';
         vm.username = '';
         vm.currentRoom = '';
+        vm.roomsHint = 'Rooms';
+        vm.roomInput = '';
         vm.Rooms = null;
         vm.online = null;
         vm.bootstrap = bootstrap;
@@ -35,11 +37,17 @@
 
         function chooseRoom(room) {
             vm.currentRoom = room;
+            vm.roomsHint = room;
             socketio.emit('changeRoom', room, vm.username);
         }
 
-        function addNewRoom() {
-            socketio.emit('addRoom', {roomName: prompt('Room Name'), email: vm.username});
+        function addNewRoom(roomName) {
+            if (roomName !== undefined && roomName !== null && roomName !== "") {
+                $scope.vm.roomInput = '';
+                socketio.emit('addRoom', {roomName: roomName, email: vm.username});
+            }
+
+
         }
 
         function handleUpdateRooms(evt, payload) {

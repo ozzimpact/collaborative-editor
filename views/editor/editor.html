@@ -1,12 +1,31 @@
 <div style="float:left;width:100px;">
-    <h3>Rooms</h3>
+    <h3 style="  margin-left: -20px;">Rooms</h3>
 
-    <div id="rooms"></div>
-    <div ng-repeat="room in vm.Rooms">
-        <a href="#" ng-click="vm.chooseRoom(room)">{{room}}</a></div>
-    <div>
-        <button ng-click="vm.addNewRoom()" class="btn btn-primary">Add Room</button>
+    <div id="rooms" class="col-lg-6"></div>
+
+    <div class="dropdown ">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                aria-expanded="true">
+           {{vm.roomsHint}}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" >
+            <li ng-repeat="room in vm.Rooms">
+                <a href="#" ng-click="vm.chooseRoom(room)">{{room}}</a>
+            </li>
+
+        </ul>
+
     </div>
+    <div>
+        <input ng-model="vm.roomInput" type="text" class="form-control" required>
+        <button ng-click="vm.addNewRoom(vm.roomInput) " class="btn btn-default"
+                type="button">
+            Add Room!
+        </button>
+    </div>
+
+
 </div>
 
 <div class="container app ">
