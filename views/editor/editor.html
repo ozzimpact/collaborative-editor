@@ -1,46 +1,40 @@
-<div style="float:left;width:100px;">
-    <h3 style="  margin-left: -20px;">Rooms</h3>
+<div id="sidebar-right" style="top: 100px;left: 50px;position: absolute;bottom: 0;padding: 0;margin: 0;">
+    <div>
+        <h3 >Rooms</h3>
 
-    <div id="rooms" class="col-lg-6"></div>
-
-    <div class="dropdown ">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                aria-expanded="true">
-           {{vm.roomsHint}}
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" >
-            <li ng-repeat="room in vm.Rooms">
+        <div id="rooms"></div>
+        <ul class="list-group" ng-repeat="room in vm.Rooms">
+            <li  class="list-group-item" style="display:inline-block;">
                 <a href="#" ng-click="vm.chooseRoom(room)">{{room}}</a>
             </li>
-
         </ul>
 
+        <div>
+            <input ng-model="vm.roomInput" type="text" style="width: 50%" class="form-control" required>
+            <button ng-click="vm.addNewRoom(vm.roomInput) " class="btn btn-default"
+                    type="button">
+                Add Room!
+            </button>
+        </div>
     </div>
-    <div>
-        <input ng-model="vm.roomInput" type="text" class="form-control" required>
-        <button ng-click="vm.addNewRoom(vm.roomInput) " class="btn btn-default"
-                type="button">
-            Add Room!
-        </button>
-    </div>
-
-
 </div>
-
-<div class="container app ">
+<div class="containerMain" style="margin-left: 95px; width: 70%;box-sizing: border-box;  height: auto;">
     <h3>Editor</h3>
     <text-angular-toolbar name="editorToolbar" ng-click="vm.sendContent(vm.htmlcontent)"></text-angular-toolbar>
     <div id=editor text-angular="text-angular" name="vm.htmlcontent" ng-model="vm.htmlcontent"
          ta-target-toolbars='editorToolbar' ng-keyup="vm.sendContent(vm.htmlcontent)"></div>
 </div>
 
-<div style="float:right;width:100px;">
-    <h3>Online</h3>
+<div id="sidebar-left" style="top: 100px;  right: 10px;position: absolute;bottom: 0;padding: 0;margin: 0;">
+    <div >
+        <h3>Online</h3>
+        <div >
+            <ul class="list-group" ng-repeat="user in vm.online">
+                <li  class="list-group-item" style="display:inline-block;">
+                    {{user}}
+                </li>
+            </ul>
 
-    <div ng-repeat="user in vm.online">
-        {{user}}
+        </div>
     </div>
 </div>
-
-
