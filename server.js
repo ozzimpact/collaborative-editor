@@ -38,16 +38,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(__dirname, 'css'));
-app.use(express.static(__dirname, 'js'));
-app.use(express.static(__dirname, 'woff'));
+app.use(express.static(__dirname));
+
 
 
 require('./src/server/routes.js')(app, passport);
 
-if(isWin)
-  bootstrap();
-else {
+if (!isWin) {
     if (cluster.isMaster) {
         console.log(num_processes);
         for (var i = 0; i < num_processes; i++) {
@@ -57,7 +54,7 @@ else {
     else
         bootstrap();
 
-}
+} else bootstrap();
 function bootstrap(){
 
 var server = app.listen(port, function() {
@@ -65,5 +62,5 @@ var server = app.listen(port, function() {
 
   var sio = socketio.attach(server);
   require('./src/server/passport')(sio, passport);
-}); 
+});
 }
