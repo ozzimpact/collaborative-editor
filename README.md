@@ -4,6 +4,17 @@
 
 Real-time room based collaborative rich text editor.
 
+# Installation  
+
+Requirements
+* nodejs
+* mongodb
+* redis
+  
+Setup
+* npm install
+* bower install
+* redis and mongodb should be up and running
 
 # Stack
 * Express.js
