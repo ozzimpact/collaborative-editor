@@ -9,9 +9,9 @@
     "ejs": "latest",
     "express": "^4.0.0",
     "express-session": "~1.0.0",
-    "forever": "^0.14.1",
-    "gulp": "^3.8.11",
-    "gulp-jshint": "^1.9.4",
+    "forever": "^0.15.3",
+    "gulp": "^4.0.0",
+    "gulp-jshint": "^2.0.2",
     "lodash": "^3.6.0",
     "mongoose": "~3.8.1",
     "morgan": "~1.0.0",
@@ -24,7 +24,8 @@
     "redis": "^0.12.1",
     "serve-static": "^1.10.0",
     "socket.io": "^1.3.2",
-    "socket.io-redis": "^0.1.4"
+    "socket.io-redis": "^0.1.4",
+    "snyk": "^1.105.0"
   },
   "devDependencies": {
     "bower": "^1.3.9",
@@ -39,5 +40,10 @@
     "gulp-less": "^1.3.6",
     "gulp-rename": "^1.2.0",
     "gulp-minify-html": "^0.1.6"
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
