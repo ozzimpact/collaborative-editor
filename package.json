@@ -9,7 +9,7 @@
     "ejs": "latest",
     "express": "^4.0.0",
     "express-session": "~1.0.0",
-    "forever": "^0.14.1",
+    "forever": "^4.0.0",
     "gulp": "^3.8.11",
     "gulp-jshint": "^1.9.4",
     "lodash": "^3.6.0",
